@@ -2,12 +2,17 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
+	docs "github.com/matfigueiredo/go-opportunities/docs"
 	"github.com/matfigueiredo/go-opportunities/handler"
+	swaggerfiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func initializeRoutes(router *gin.Engine) {
 
 	handler.InitializeHandler()
+
+	docs.SwaggerInfo.BasePath = "/api/v1"
 
 	v1 := router.Group("/api/v1")
 
@@ -22,4 +27,7 @@ func initializeRoutes(router *gin.Engine) {
 
 		v1.GET("/jobs_openings", handler.ListOpeningsHandler)
 	}
+
+	//Swagger
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 }
