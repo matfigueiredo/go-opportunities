@@ -12,9 +12,11 @@ func initializeRoutes(router *gin.Engine) {
 
 	handler.InitializeHandler()
 
-	docs.SwaggerInfo.BasePath = "/api/v1"
+	basePath := "/api/v1"
 
-	v1 := router.Group("/api/v1")
+	docs.SwaggerInfo.BasePath = basePath
+
+	v1 := router.Group(basePath)
 
 	{
 		v1.GET("/jobs_opening", handler.ShowOpeningHandler)
